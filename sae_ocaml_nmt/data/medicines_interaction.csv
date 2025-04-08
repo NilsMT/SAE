@@ -1,0 +1,11 @@
+medicine1_name,medicine1_cis_code,medicine2_name,medicine2_cis_code,symptom
+"Paracetamol","1234A","Ibuprofen","5678B","Stomach discomfort"
+"Ibuprofen","5678B","Aspirin","9101C","Dizziness"
+"Amoxicillin","1122D","Ibuprofen","5678B","Nausea"
+"Cetirizine","3344E","Aspirin","9101C","Drowsiness"
+"Metformin","5566F","Lisinopril","7788G","Low blood pressure"
+"Losartan","9900H","Hydrochlorothiazide","4455J","Dizziness"
+"Omeprazole","2233I","Ibuprofen","5678B","Gastric irritation"
+"Hydrochlorothiazide","4455J","Metformin","5566F","Increased urination"
+"Paracetamol","1234A","Cetirizine","3344E","Headache"
+"Losartan","9900H","Amoxicillin","1122D","Rash"

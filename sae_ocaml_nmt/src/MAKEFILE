@@ -1,0 +1,67 @@
+# Compiler flags
+FLAGS = -w a  # Turn off warnings
+
+# Executable output name
+OUT = main
+
+# Source files
+SOURCES = Dao.ml Entity.ml Reader_doctor.ml Reader_interaction.ml Reader_medicine.ml Main.ml
+
+# Object files (compiled modules)
+OBJECTS = $(SOURCES:.ml=.cmo)
+
+# The default rule to compile the executable
+all: $(OUT)
+
+# Rule to build the executable
+$(OUT): $(OBJECTS)
+	ocamlc $(FLAGS) -o $(OUT) $(OBJECTS)
+
+# Rule to build each .cmo file from .ml files
+Dao.cmo: Dao.ml Entity.cmi
+	ocamlc $(FLAGS) -c $<
+
+Entity.cmo: Entity.ml Entity.cmi
+	ocamlc $(FLAGS) -c $<
+
+Reader_doctor.cmo: Reader_doctor.ml Entity.cmi
+	ocamlc $(FLAGS) -c $<
+
+Reader_interaction.cmo: Reader_interaction.ml Entity.cmi
+	ocamlc $(FLAGS) -c $<
+
+Reader_medicine.cmo: Reader_medicine.ml Entity.cmi
+	ocamlc $(FLAGS) -c $<
+
+Main.cmo: Main.ml Dao.cmo Reader_doctor.cmo Reader_interaction.cmo Reader_medicine.cmo Entity.cmo
+	ocamlc $(FLAGS) -c $<
+
+# Rule to build the .cmi (interface) file for Entity
+Entity.cmi: Entity.mli
+	ocamlc $(FLAGS) -c $<
+
+# Clean up generated files
+clean:
+	rm -f *.cmo *.cmi $(OUT)
+
+# Clean up everything (including the executable)
+mrproper: clean
+	rm -f $(OUT)
+
+# Test rule
+test: $(OUT)
+	./$(OUT)
+
+.PHONY: all clean mrproper test
+
+# Set up Ocaml in the environment
+setenv:
+ifeq ($(OS_TYPE), W)
+	@echo "Setting environment for Windows"
+	opam env | Invoke-Expression
+else ifeq ($(OS_TYPE), U)
+	@echo "Setting environment for Linux"
+	eval $$(opam env)
+else
+	@echo "Please specify OS_TYPE: W for Windows, U for Linux"
+endif
